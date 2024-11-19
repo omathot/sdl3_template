@@ -48,7 +48,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char **argv) {
   }
 
 
-  state->_animations->_anim = IMG_LoadAnimation("/Users/oscarmathot/dev/sdl3/test/assets/layers_test.gif");
+  state->_animations->_anim = IMG_LoadAnimation("../assets/layers_test.gif");
   if (!state->_animations->_anim) {
     SDL_Log("Error: Could not load anim: %s\n", SDL_GetError());
     return SDL_APP_FAILURE;

@@ -4,7 +4,7 @@
 #include <SDL3_image/SDL_image.h>
 
 typedef struct SpriteAnim {
-  // IMG_Animation *_anim;
+  IMG_Animation *_anim;
   SDL_Texture **_textures;
   int _delay;
   int _current_frame;
