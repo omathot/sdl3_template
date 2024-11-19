@@ -1,0 +1,8 @@
+Adventures & Adversaries
+v. 1.2 (31/5/2024)
+Corrections for the following character spritesheets:
+Character_C, Character_C_alt
+Horse, Horse_alt
+
+Addition:
+Added Adventure Inside characters and animations
