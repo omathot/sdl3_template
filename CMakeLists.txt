@@ -1,8 +1,11 @@
 set(SOURCE_FILES
     src/helloworld.cpp
     src/utils.cpp
+    src/animations.cpp
+    src/animation.cpp
+    src/player.cpp
+    src/appState.cpp
 )
-
 
 cmake_minimum_required(VERSION 3.10)
 project(hello_world VERSION 1.0)
