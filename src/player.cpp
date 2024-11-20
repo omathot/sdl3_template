@@ -66,6 +66,7 @@ const Animation &Player::getAnimation(std::string name) const {
 
 void Player::updateFrameIndex() {
   std::string tmp = "walk down";
-  Animation hold = this->_animations->getAnimation(tmp);
-  hold.setIndex();
+  // Animation hold = this->_animations->getAnimation(tmp);
+  // hold.setIndex();
+  this->_animations->getAnimation(tmp).setIndex();
 }

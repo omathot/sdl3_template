@@ -19,6 +19,14 @@ AppState::AppState() {
     SDL_Log("SDL_CreateRenderer error: %s\n", SDL_GetError());
   }
 
+  bool check = SDL_SetHint("SDL_HINT_RENDER_SCALE_MODE", "nearest");
+  if (!check) {
+    SDL_Log("bool returned neg\n");
+  } else {
+    SDL_Log("returned true\n");
+  }
+
+
   this->_player = new Player();
   if (!this->_player) {
     SDL_Log("Error: Could not construct Player: %s\n", SDL_GetError());

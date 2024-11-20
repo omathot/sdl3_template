@@ -22,5 +22,4 @@ private:
   int _delay;
   int _textureCount;
   int _index;
-  
 };

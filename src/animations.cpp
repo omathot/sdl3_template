@@ -40,6 +40,6 @@ int Animations::getDelay() const {
   return this->_animations->begin()->second.getDelay();
 }
 
-const Animation &Animations::getAnimation(std::string name) const {
+Animation &Animations::getAnimation(std::string name) const {
   return (*this->_animations)[name];
 }
