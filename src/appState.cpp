@@ -1,4 +1,5 @@
 #include "AppState.hpp"
+#include "SDL3/SDL_error.h"
 #include "SDL3/SDL_render.h"
 
 AppState::AppState() {
@@ -7,7 +8,7 @@ AppState::AppState() {
   if (result < 0) {
     SDL_Log("SDL_Init() error: %s\n", SDL_GetError());
   }
-
+  this->_count = 0;
 
   this->_window = SDL_CreateWindow("Hello world", 800, 600, 0);
   if (this->_window == nullptr) {
@@ -18,6 +19,12 @@ AppState::AppState() {
   if (this->_renderer == nullptr) {
     SDL_Log("SDL_CreateRenderer error: %s\n", SDL_GetError());
   }
+
+  bool render_hint = SDL_SetHint("SDL_HINT_RENDER_SCALE_MODE", "nearest");
+  if (!render_hint) {
+    SDL_Log("Error: Failed to give render hint: %s\n", SDL_GetError());
+  }
+
 
   this->_player = new Player();
   if (!this->_player) {
@@ -52,6 +59,16 @@ AppState::~AppState() {
     delete this->_player;
 }
 
+// setters
+void AppState::updateCount() {
+  this->_count += 1;
+}
+
+void AppState::terminate() {
+  this->_running = false;
+}
+
+// getters
 SDL_Renderer *AppState::getRenderer() const {
   return this->_renderer;
 }
@@ -67,6 +84,6 @@ Player *AppState::getPlayer() const {
   return this->_player;
 }
 
-void AppState::terminate() {
-  this->_running = false;
+long int AppState::getCount() const {
+  return this->_count;
 }
