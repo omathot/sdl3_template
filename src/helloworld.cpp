@@ -1,4 +1,3 @@
-#include "SDL3/SDL_init.h"
 #define SDL_MAIN_USE_CALLBACKS
 
 #include <SDL3/SDL_hints.h>
@@ -6,18 +5,37 @@
 #include <SDL3/SDL_main.h>
 #include <SDL3_image/SDL_image.h>
 #include <string>
-#include <vector>
+#include <iostream>
 
 // those includes are found on compilation through cmake. avoiding relative path solutions such as: ../include/<x>. Works with LSP through .clangd flags
 #include "AppState.hpp"
+#include "Transform.hpp"
+#include "Vector2.hpp"
 
 
+SDL_FRect drect;
 
 void draw_background(SDL_Renderer *renderer, int w, int h);
 
 // called once before everything else
 // can set a pointer to appstate if want to pass to functions
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char **argv) {
+  // tests
+  Vector2 tmp = Vector2(12.0f, 0.0f);
+  std::cout << tmp << std::endl;
+  Vector2 comparison = Vector2(0.0f, 23.0f);
+  float angle = tmp.angleWith(comparison);
+  Vector2 normal = tmp.normalize();
+  std::cout << "angle: " << angle << ", normal vector: " << normal << std::endl;
+  Transform tmp2 = Transform(1.0f, 1.0f);
+  tmp2.translateX(5);
+
+
+
+
+
+
+  
   AppState *state = new AppState();
   if (!state) {
     SDL_Log("Error: Could not allocate AppState: %s\n", SDL_GetError());
@@ -37,6 +55,7 @@ SDL_AppResult SDL_AppIterate(void *appstate) {
     SDL_Log("Failed to retrieve appstat\n");
     return SDL_APP_FAILURE;
   }
+  state->updateCount();
   Player *player = state->getPlayer();
   if (!player) {
     SDL_Log("Error: Failed to retrieve Player\n");
@@ -47,8 +66,10 @@ SDL_AppResult SDL_AppIterate(void *appstate) {
   SDL_GetTextureSize(player->getCurrentFrame(), &w, &h);
   draw_background(state->getRenderer(), w, h);
 
-  // segfaults here -! not anymore but now doesnt display texture
-  SDL_RenderTexture(state->getRenderer(), player->getCurrentFrame(), NULL, NULL);
+  drect.h = 32;
+  drect.w = 32;
+  drect.x = state->getCount();
+  SDL_RenderTexture(state->getRenderer(), player->getCurrentFrame(), NULL, &drect);
   SDL_RenderPresent(state->getRenderer());
 
   SDL_Delay(state->getPlayer()->getAnimation("walk down").getDelay());

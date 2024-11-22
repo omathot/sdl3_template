@@ -11,16 +11,22 @@ public:
   AppState(const AppState &src);
   AppState &operator=(const AppState &src);
 
+  void updateCount();
+  void terminate();
+
+  long int getCount() const;
   SDL_Renderer *getRenderer() const;
   SDL_Window *getWindow() const;
   bool isRunning() const;
   Player *getPlayer() const;
 
-  void terminate();
   
 private:
+  long int _count;
+
   SDL_Window *_window;
   SDL_Renderer *_renderer;
   bool _running;
   Player *_player;
+
 };

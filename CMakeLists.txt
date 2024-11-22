@@ -5,6 +5,8 @@ set(SOURCE_FILES
     src/animation.cpp
     src/player.cpp
     src/appState.cpp
+    src/vector2.cpp
+    src/transform.cpp
 )
 
 cmake_minimum_required(VERSION 3.10)

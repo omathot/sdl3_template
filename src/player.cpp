@@ -7,17 +7,22 @@
 Player::Player() {
   SDL_Log("Player constructor called");
   this->_animations = new Animations();
+  this->_location = new std::vector<int>();
+  this->_location->push_back(0);
+  this->_location->push_back(0);
 }
 
 Player::Player(const Player &src) {
   if (this != &src) {
     this->_animations = src._animations;
+    this->_location = src._location;
   }
 }
 
 Player &Player::operator=(const Player &src) {
   if (this != &src) {
     this->_animations = src._animations;
+    this->_location = src._location;
   }
 
   return (*this);
@@ -64,9 +69,11 @@ const Animation &Player::getAnimation(std::string name) const {
   return this->_animations->getAnimation(name);
 }
 
+std::vector<int> *Player::getLocation() const {
+  return this->_location;
+}
+
 void Player::updateFrameIndex() {
   std::string tmp = "walk down";
-  // Animation hold = this->_animations->getAnimation(tmp);
-  // hold.setIndex();
   this->_animations->getAnimation(tmp).setIndex();
 }
