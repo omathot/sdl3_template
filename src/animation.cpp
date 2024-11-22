@@ -72,5 +72,4 @@ SDL_Texture *Animation::getCurrentFrame() const {
 
 void Animation::setIndex() {
   this->_index = (this->_index + 1) % this->_textureCount;
-  SDL_Log("index: %i, textureCount: %i\n", this->_index, this->_textureCount);
 }

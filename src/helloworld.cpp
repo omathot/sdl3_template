@@ -15,13 +15,13 @@
 
 SDL_FRect drect;
 
-void draw_background(SDL_Renderer *renderer, int w, int h);
+void draw_background(SDL_Renderer *renderer, int w, int h, long int x);
 
 // called once before everything else
 // can set a pointer to appstate if want to pass to functions
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char **argv) {
   // tests
-  Vector2 tmp = Vector2(12.0f, 0.0f);
+  Vector2 tmp = Vector2(12.0f, 4.0f);
   std::cout << tmp << std::endl;
   Vector2 comparison = Vector2(0.0f, 23.0f);
   float angle = tmp.angleWith(comparison);
@@ -35,7 +35,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char **argv) {
 
 
 
-  
+  // init start  
   AppState *state = new AppState();
   if (!state) {
     SDL_Log("Error: Could not allocate AppState: %s\n", SDL_GetError());
@@ -64,7 +64,7 @@ SDL_AppResult SDL_AppIterate(void *appstate) {
 
   float w, h;
   SDL_GetTextureSize(player->getCurrentFrame(), &w, &h);
-  draw_background(state->getRenderer(), w, h);
+  draw_background(state->getRenderer(), w, h, state->getCount());
 
   drect.h = 32;
   drect.w = 32;

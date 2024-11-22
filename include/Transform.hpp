@@ -1,6 +1,8 @@
 #pragma once
 #include "Vector2.hpp"
 
+
+// TRANSLATION(POSITION), ROTATION AND SCALE
 class Transform {
 public:
   Transform();

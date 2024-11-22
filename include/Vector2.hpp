@@ -34,7 +34,6 @@ public:
   float distanceTo(Vector2 &src) const;
   float angleWith(Vector2 &src) const;
   Vector2 normalize() const;
-
   
 
 private:

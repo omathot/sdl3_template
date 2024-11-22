@@ -1,6 +1,6 @@
 #include <SDL3/SDL.h>
 
-void draw_background(SDL_Renderer *renderer, int w, int h)
+void draw_background(SDL_Renderer *renderer, int w, int h, long int n)
 {
     SDL_Color col[2] = {
         { 0x66, 0x66, 0x66, 0xff },
@@ -13,7 +13,7 @@ void draw_background(SDL_Renderer *renderer, int w, int h)
     rect.w = (float)dx;
     rect.h = (float)dy;
     for (y = 0; y < h; y += dy) {
-        for (x = 0; x < w; x += dx) {
+        for (x = n; x < n + w; x += dx) {
             /* use an 8x8 checkerboard pattern */
             i = (((x ^ y) >> 3) & 1);
             SDL_SetRenderDrawColor(renderer, col[i].r, col[i].g, col[i].b, col[i].a);
