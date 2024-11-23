@@ -1,5 +1,6 @@
 #include <SDL3/SDL.h>
 #include "Animations.hpp"
+#include "Transform.hpp"
 
 class Player {
 public:
@@ -21,6 +22,7 @@ private:
     Animations *_animations;
     std::vector<int> *_location;
     int _speed;
+    Transform *_transform;
 };
 
 // refactor ideas:
