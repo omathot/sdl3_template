@@ -3,22 +3,25 @@
 
 
 // TRANSLATION(POSITION), ROTATION AND SCALE
+// 3x2 matrix (x, y, origin)
 class Transform {
 public:
   Transform();
-  Transform(float x, float y);
+  Transform(Vec2 x, Vec2 y);
   ~Transform();
   Transform(const Transform &src);
   Transform &operator=(const Transform &src);
 
-  float x() const;
-  float y() const;
+  Vec2 position() const;
+  Vec2 scale() const;
+  float rotation() const;
   
-  void translateX(float n);
-  void translateY(float n);
-  void translate(Vector2 &src);
 
 private:
-  float _x;
-  float _y;
+  Vec2 _position;
+  Vec2 _scale;
+  float _rotation;
+
+  // float _x;
+  // float _y;
 };

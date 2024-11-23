@@ -3,25 +3,25 @@
 #include <SDL3/SDL.h>
 #include <iostream>
 
-class Vector2;
-std::ostream& operator<<(std::ostream& os, const Vector2& src);
+class Vec2;
+std::ostream& operator<<(std::ostream& os, const Vec2& src);
 
-class Vector2 {
+class Vec2 {
 public:
-  Vector2();
-  Vector2(float x, float y);
-  ~Vector2();
-  Vector2(const Vector2 &src);
+  Vec2();
+  Vec2(float x, float y);
+  ~Vec2();
+  Vec2(const Vec2 &src);
 
-  Vector2 &operator*(const Vector2 &src);
-  Vector2 &operator*(float n);             // scales by n
-  Vector2 &operator/(const Vector2 &src);
-  Vector2 &operator+(const Vector2 &src);  // add Vector2
-  Vector2 &operator+(float n);             // add value
-  Vector2 &operator-(const Vector2 &src);  // subtract Vector2
-  Vector2 &operator-(float n);             // subtract value
-  Vector2 &operator=(const Vector2 &src);
-  bool operator==(const Vector2 &src);
+  Vec2 operator*(const Vec2 &src) const;
+  Vec2 operator*(float n) const;             // scales by n
+  Vec2 operator/(const Vec2 &src) const;
+  Vec2 operator+(const Vec2 &src) const;  // add Vec2
+  Vec2 operator+(float n) const;             // add value
+  Vec2 operator-(const Vec2 &src) const;  // subtract Vec2
+  Vec2 operator-(float n) const;             // subtract value
+  Vec2 &operator=(const Vec2 &src);
+  bool operator==(const Vec2 &src) const;
 
   float x() const;
   float y() const;
@@ -29,11 +29,11 @@ public:
   void setY(float y);
 
   float len() const;
-  float dotProduct(Vector2 &src) const;
-  float crossProduct(Vector2 &src) const;
-  float distanceTo(Vector2 &src) const;
-  float angleWith(Vector2 &src) const;
-  Vector2 normalize() const;
+  float dotProduct(Vec2 &src) const;
+  float crossProduct(Vec2 &src) const;
+  float distanceTo(Vec2 &src) const;
+  float angleWith(Vec2 &src) const;
+  Vec2 normalize() const;
   
 
 private:
