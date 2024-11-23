@@ -1,4 +1,3 @@
-#include "SDL3/SDL_render.h"
 #define SDL_MAIN_USE_CALLBACKS
 
 #include <SDL3/SDL_hints.h>
