@@ -13,7 +13,7 @@ public:
 
   void addAnimation(std::string &name, SDL_Texture **textures, int delay, int textureCount);
   SDL_Texture *getCurrentFrame() const;
-  const Animation &getAnimation(std::string name) const;
+  Animation &getAnimation(std::string name) const;
 
   int getDelay() const;
 

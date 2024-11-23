@@ -21,7 +21,15 @@ Animation::Animation() {
 }
 
 Animation::Animation(const Animation &src) {
-  //
+  // if (this != &src)
+  //   delete this->_textures;
+  this->_textureCount = src._textureCount;
+  this->_delay = src.getDelay();
+  this->_index = src.getIndex();
+  this->_textures = new SDL_Texture *[this->_textureCount];
+  for (int i = 0; i < this->_textureCount; i++) {
+    this->_textures[i] = src._textures[i];
+  }
 }
 
 Animation &Animation::operator=(const Animation &src) {
