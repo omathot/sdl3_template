@@ -1,3 +1,4 @@
+#include "SDL3/SDL_render.h"
 #define SDL_MAIN_USE_CALLBACKS
 
 #include <SDL3/SDL_hints.h>
@@ -21,14 +22,12 @@ void draw_background(SDL_Renderer *renderer, int w, int h, long int x);
 // can set a pointer to appstate if want to pass to functions
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char **argv) {
   // tests
-  Vector2 tmp = Vector2(12.0f, 4.0f);
+  Vec2 tmp = Vec2(12.0f, 4.0f);
   std::cout << tmp << std::endl;
-  Vector2 comparison = Vector2(0.0f, 23.0f);
+  Vec2 comparison = Vec2(0.0f, 23.0f);
   float angle = tmp.angleWith(comparison);
-  Vector2 normal = tmp.normalize();
+  Vec2 normal = tmp.normalize();
   std::cout << "angle: " << angle << ", normal vector: " << normal << std::endl;
-  Transform tmp2 = Transform(1.0f, 1.0f);
-  tmp2.translateX(5);
 
 
 
@@ -64,6 +63,7 @@ SDL_AppResult SDL_AppIterate(void *appstate) {
 
   float w, h;
   SDL_GetTextureSize(player->getCurrentFrame(), &w, &h);
+  SDL_RenderClear(state->getRenderer());
   draw_background(state->getRenderer(), w, h, state->getCount());
 
   drect.h = 32;
