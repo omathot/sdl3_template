@@ -39,12 +39,11 @@ Mat3 Mat3::operator+(const Mat3 &src) const {
   return result;
 }
 
-Mat3 Mat3::operator+=(const Mat3 &src) const {
-  Mat3 result;
+Mat3 &Mat3::operator+=(const Mat3 &src) {
   for (int i = 0; i < 9; i++) {
-    result._data[i] = this->_data[i] + src._data[i];
+    this->_data[i] += src._data[i];
   }
-  return result;
+  return *this;
 }
 
 Mat3 Mat3::operator-(const Mat3 &src) const {
@@ -54,10 +53,17 @@ Mat3 Mat3::operator-(const Mat3 &src) const {
   }
   return result;
 }
-Mat3 Mat3::operator-=(const Mat3 &src) const {
-  Mat3 result;
+Mat3 &Mat3::operator-=(const Mat3 &src) {
   for (int i = 0; i < 9; i++) {
-    result._data[i] = this->_data[i] - src._data[i];
+    this->_data[i] -= src._data[i];
   }
-  return result;
+  return *this;
+}
+
+const float &Mat3::operator()(int row, int col) const {
+  return this->_data[row * 3 + col];
+}
+
+float &Mat3::operator()(int row, int col) {
+  return this->_data[row * 3 + col];
 }

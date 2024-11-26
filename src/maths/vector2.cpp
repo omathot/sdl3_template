@@ -15,6 +15,11 @@ Vec2::Vec2(float x, float y) {
   this->_y = y;
 }
 
+Vec2::Vec2(float n) {
+  this->_x = n;
+  this->_y = n;
+}
+
 Vec2::Vec2(const Vec2 &src) {
   if (this != &src) {
     this->_x = src._x;
@@ -52,11 +57,23 @@ Vec2 Vec2::operator+(const Vec2 &src) const {
   return result;
 }
 
+Vec2 &Vec2::operator+=(const Vec2 &src) {
+  this->_x += src._x;
+  this->_y = src._y;
+  return *this;
+}
+
 Vec2 Vec2::operator+(float n) const {
   Vec2 result;
   result._x = this->_x + n;
   result._y = this->_y + n;
   return result;
+}
+
+Vec2 &Vec2::operator+=(float n) {
+  this->_x += n;
+  this->_y += n;
+  return *this;
 }
 
 Vec2 Vec2::operator-(const Vec2 &src) const {
@@ -66,11 +83,23 @@ Vec2 Vec2::operator-(const Vec2 &src) const {
   return result;;
 }
 
+Vec2 &Vec2::operator-=(const Vec2 &src) {
+  this->_x -= src._x;
+  this->_y -= src._y;
+  return *this;
+}
+
 Vec2 Vec2::operator-(float n) const {
   Vec2 result;
   result._x = this->_x - n;
   result._y = this->_y - n;
   return result;
+}
+
+Vec2 &Vec2::operator-=(float n) {
+  this->_x -= n;
+  this->_y -= n;
+  return *this;
 }
 
 Vec2 Vec2::operator*(const Vec2 &src) const {
@@ -80,6 +109,12 @@ Vec2 Vec2::operator*(const Vec2 &src) const {
   return result;
 }
 
+Vec2 &Vec2::operator*=(const Vec2 &src) {
+  this->_x *= src._x;
+  this->_y *= src._y;
+  return *this;
+}
+
 Vec2 Vec2::operator*(float n) const {
   Vec2 result;
   result._x = this->_x * n;
@@ -87,11 +122,23 @@ Vec2 Vec2::operator*(float n) const {
   return result;
 }
 
+Vec2 &Vec2::operator*=(float n) {
+  this->_x *= n;
+  this->_y *= n;
+  return *this;
+}
+
 Vec2 Vec2::operator/(const Vec2 &src) const {
   Vec2 result;
   result._x = this->_x / src._x;
   result._y = this->_y / src._y;
   return result;
+}
+
+Vec2 &Vec2::operator/=(const Vec2 &src) {
+  this->_x /= src._x;
+  this->_y /= src._y;
+  return *this;
 }
 
 std::ostream &operator<<(std::ostream &os, const Vec2 &src) {
@@ -152,3 +199,12 @@ Vec2 Vec2::normalize() const {
   }
   return ret;
 }
+
+// Vec2 Vec2::transform(Mat3 &src) const {
+//   Vec2 result;
+//   float x = this->_x;
+//   float y = this->_y;
+//   float z = 0;
+
+//   // result._x = src
+// }

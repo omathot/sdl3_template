@@ -6,6 +6,7 @@ set(SOURCE_FILES
     src/player.cpp
     src/appState.cpp
     src/maths/vector2.cpp
+    src/maths/vector3.cpp
     src/maths/transform.cpp
     src/maths/matrix3.cpp
 )

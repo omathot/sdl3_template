@@ -11,12 +11,13 @@ public:
 
   Mat3 &operator=(const Mat3 &src);
   Mat3 operator+(const Mat3 &src) const;
-  Mat3 operator+=(const Mat3 &src) const;
+  Mat3 &operator+=(const Mat3 &src);
   Mat3 operator-(const Mat3 &src) const;
-  Mat3 operator-=(const Mat3 &src) const;
+  Mat3 &operator-=(const Mat3 &src);
   Mat3 operator*(const Mat3 &src) const;
   Mat3 operator/(const Mat3 &src); const
   Mat3 &operator==(const Mat3 &src);
+  float &operator()(int row, int col);
   const float &operator()(int row, int col) const;
 
 private:

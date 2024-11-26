@@ -63,7 +63,7 @@ SDL_AppResult SDL_AppIterate(void *appstate) {
   float w, h;
   SDL_GetTextureSize(player->getCurrentFrame(), &w, &h);
   SDL_RenderClear(state->getRenderer());
-  draw_background(state->getRenderer(), w, h, state->getCount());
+  // draw_background(state->getRenderer(), w, h, state->getCount());
 
   drect.h = 32;
   drect.w = 32;
