@@ -1,6 +1,7 @@
 #include <SDL3/SDL.h>
 #include "Animations.hpp"
 #include "Transform.hpp"
+#include <memory>
 
 class Player {
 public:
@@ -10,8 +11,8 @@ public:
   Player &operator=(const Player &src);
 
   SDL_Texture       *getCurrentFrame() const;
-  Animations        *getAnimations() const;
-  std::vector<int>  *getLocation() const;
+  const Animations  &getAnimations() const; // read only
+  Animations        &getAnimations();       // write but maintain ownership
   const Animation   &getAnimation(std::string name) const;
 
   void loadAnimations(SDL_Renderer *renderer);
@@ -19,11 +20,13 @@ public:
   void updateLocation();
 
 private:
-    Animations *_animations;
-    std::vector<int> *_location;
-    int _speed;
-    Transform *_transform;
+  std::unique_ptr<Animations> _animations;
+  std::unique_ptr<Transform> _transform;
+  int _speed;
+    // Animations *_animations;
 };
+
+// unique_ptr for transform and animations
 
 // refactor ideas:
 // Movement Controller struct/class

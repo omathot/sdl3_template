@@ -98,6 +98,8 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event) {
 void SDL_AppQuit(void *appstate, SDL_AppResult result) {
   AppState *state = (AppState *)appstate;
 
+  delete state->getPlayer();
+
   SDL_Log("SDL3 shutdown\n");
   SDL_DestroyRenderer(state->getRenderer());
   SDL_DestroyWindow(state->getWindow());

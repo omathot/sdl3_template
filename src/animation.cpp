@@ -1,13 +1,14 @@
 #include "Animation.hpp"
 #include "SDL3/SDL_render.h"
+#include <memory>
 
-Animation::Animation(SDL_Texture **textures, int textureCount, int delay) {
+Animation::Animation(std::vector<SDL_Texture*> &textures, int delay) {
   SDL_Log("Animation constructor called\n");
-  this->_textureCount = textureCount;
+  this->_textureCount = textures.size();
   this->_delay = delay;
-  this->_textures = new SDL_Texture *[textureCount];
-  for (int i = 0; i < textureCount; i++) {
-    this->_textures[i] = textures[i];
+  this->_textures.reserve(textures.size());
+  for (const auto texture : textures) {
+    this->_textures.push_back(std::shared_ptr<SDL_Texture>(texture, TextureDeleter()));
   }
   this->_index = 0;
 }
@@ -17,39 +18,28 @@ Animation::Animation() {
   this->_textureCount = 0;
   this->_delay = 0;
   this->_index = 0;
-  this->_textures = new SDL_Texture *[5];
+  this->_textures = std::vector<std::shared_ptr<SDL_Texture>>();
 }
 
 Animation::Animation(const Animation &src) {
-  // if (this != &src)
-  //   delete this->_textures;
   this->_textureCount = src._textureCount;
-  this->_delay = src.getDelay();
-  this->_index = src.getIndex();
-  this->_textures = new SDL_Texture *[this->_textureCount];
-  for (int i = 0; i < this->_textureCount; i++) {
-    this->_textures[i] = src._textures[i];
-  }
+  this->_delay = src._delay;
+  this->_index = src._index;
+  this->_textures = src._textures;
 }
 
 Animation &Animation::operator=(const Animation &src) {
   if (this != &src) {
-    delete this->_textures;
+    this->_textures = src._textures;
     this->_textureCount = src._textureCount;
-    this->_delay = src.getDelay();
-    this->_index = src.getIndex();
-    this->_textures = new SDL_Texture *[this->_textureCount];
-    for (int i = 0; i < this->_textureCount; i++) {
-      this->_textures[i] = src._textures[i];
-    }
+    this->_delay = src._delay;
+    this->_index = src._index;
   }
   return *this;
 }
 
 Animation::~Animation() {
-  for (int i = 0; i < this->_textureCount; i++) {
-    SDL_DestroyTexture(this->_textures[i]);
-  }
+  SDL_Log("Animation destructor called\n");
 }
 
 int Animation::getDelay() const {
@@ -65,8 +55,10 @@ int Animation::getIndex() const {
 }
 
 SDL_Texture *Animation::getCurrentFrame() const {
-  if (this->_index < this->_textureCount)
-    return this->_textures[this->_index];
+  if (this->_index < this->_textureCount) {
+    return this->_textures.at(this->_index).get();
+    
+  }
   return nullptr;
 }
 

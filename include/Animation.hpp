@@ -1,11 +1,14 @@
 #pragma once
 
+#include "SDL3/SDL_render.h"
 #include <SDL3/SDL.h>
+#include <vector>
+#include <iostream>
 
 class Animation {
 public:
   Animation();
-  Animation(SDL_Texture **textures, int textureCount, int delay);
+  Animation(std::vector<SDL_Texture*> &textures, int delay);
   ~Animation();
   Animation(const Animation &src);
   Animation &operator=(const Animation &src);
@@ -18,8 +21,19 @@ public:
   void setIndex();
 
 private:
-  SDL_Texture **_textures;
+  std::vector<std::shared_ptr<SDL_Texture>> _textures;
+  // SDL_Texture **_textures;
   int _delay;
   int _textureCount;
   int _index;
+
+  struct TextureDeleter {
+    void operator()(SDL_Texture *texture) {
+      std::cout << "Texture custom deleter called" << std::endl; 
+      if (texture) {
+        SDL_DestroyTexture(texture);
+      }
+    }
+  };
 };
+

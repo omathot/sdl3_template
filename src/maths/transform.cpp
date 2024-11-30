@@ -37,6 +37,14 @@ Transform::~Transform() {
 }
 
 // TRANSLATIONS
+void Transform::move(Vec2 &src) {
+  float data[9] = {
+    1.0f, 0.0f, src.x(),
+    0.0f, 1.0f, src.y(),
+    0.0f, 0.0f, 0.0f
+  };
+  Mat3 translationMatrix(data);
+}
 
 // GETTERS
 Vec2 Transform::position() const {

@@ -16,6 +16,7 @@ Vec2::Vec2(float x, float y) {
 }
 
 Vec2::Vec2(float n) {
+  SDL_Log("Vec2 global constructor called\n");
   this->_x = n;
   this->_y = n;
 }

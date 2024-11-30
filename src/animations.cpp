@@ -3,7 +3,7 @@
 
 Animations::Animations() {
   SDL_Log("Animations constructor called\n");
-  this->_animations = new std::map<std::string, Animation>();
+  this->_animations = std::map<std::string, Animation>();
 }
 
 Animations::Animations(const Animations &src) {
@@ -16,8 +16,7 @@ Animations::Animations(const Animations &src) {
 Animations &Animations::operator=(const Animations &src) {
   SDL_Log("Animations copy operator called");
   if (this != &src) {
-    delete this->_animations;
-    this->_animations = new std::map<std::string, Animation>(*src._animations);
+    this->_animations = std::map<std::string, Animation>(src._animations);
   }
   return *this;
 }
@@ -26,20 +25,28 @@ Animations::~Animations() {
   SDL_Log("Animations destructor called\n");
 }
 
-void Animations::addAnimation(std::string &name, SDL_Texture **textures, int delay, int textureCount) {
-  Animation *anim = new Animation(textures, textureCount, delay);
+void Animations::addAnimation(std::string &name, std::vector<SDL_Texture*> &textures, int delay, int textureCount) {
+  Animation anim = Animation(textures, delay);
 
-  (*this->_animations)[name] = (*anim);
+  (this->_animations)[name] = (anim);
 }
 
 SDL_Texture *Animations::getCurrentFrame() const {
-  return this->_animations->begin()->second.getCurrentFrame();
+  return this->_animations.begin()->second.getCurrentFrame();
 }
 
 int Animations::getDelay() const {
-  return this->_animations->begin()->second.getDelay();
+  return this->_animations.begin()->second.getDelay();
 }
 
-Animation &Animations::getAnimation(std::string name) const {
-  return (*this->_animations)[name];
+const Animation &Animations::getAnimation(std::string name) const {
+  return (this->_animations).at(name);
 }
+
+Animation &Animations::getAnimation(std::string name) {
+  return this->_animations.at(name);
+}
+
+const std::map<std::string, Animation> &Animations::getAllAnimations() const {
+  return _animations;
+} 

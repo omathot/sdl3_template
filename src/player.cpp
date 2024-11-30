@@ -3,26 +3,25 @@
 #include "SDL3/SDL_render.h"
 #include "SDL3/SDL_surface.h"
 #include <SDL3_image/SDL_image.h>
+#include <memory>
 
 Player::Player() {
   SDL_Log("Player constructor called");
-  this->_animations = new Animations();
-  this->_location = new std::vector<int>();
-  this->_location->push_back(0);
-  this->_location->push_back(0);
+  this->_animations = std::make_unique<Animations>();
+  this->_transform = std::make_unique<Transform>();
 }
 
 Player::Player(const Player &src) {
-  if (this != &src) {
-    this->_animations = src._animations;
-    this->_location = src._location;
-  }
+  this->_animations = std::make_unique<Animations>(*src._animations);
+  this->_transform = std::make_unique<Transform>(*src._transform);
+  this->_speed = src._speed;
 }
 
 Player &Player::operator=(const Player &src) {
   if (this != &src) {
-    this->_animations = src._animations;
-    this->_location = src._location;
+    this->_animations = std::make_unique<Animations>(*src._animations);
+    this->_transform = std::make_unique<Transform>(*src._transform);
+    this->_speed = src._speed;
   }
 
   return (*this);
@@ -46,32 +45,34 @@ void Player::loadAnimations(SDL_Renderer *renderer) {
   if (!dwalk_1 || !dwalk_2 || !dwalk_3) {
     SDL_Log("Error: Failed to create texture from surface: %s\n", SDL_GetError());
   }
+  std::vector<SDL_Texture*> textures;
+  textures.push_back(dwalk_1);
+  textures.push_back(dwalk_2);
+  textures.push_back(dwalk_3);
+
   SDL_DestroySurface(s_dwalk_1);
   SDL_DestroySurface(s_dwalk_2);
   SDL_DestroySurface(s_dwalk_3);
-  SDL_Texture **hold = new SDL_Texture*[3];
-  hold[0] = dwalk_1;
-  hold[1] = dwalk_2;
-  hold[2] = dwalk_3;
   std::string name = "walk down";
-  this->_animations->addAnimation(name, hold, 100, 3);
+  this->_animations->addAnimation(name, textures, 100, 3);
 }
 
 SDL_Texture *Player::getCurrentFrame() const {
   return this->_animations->getCurrentFrame();
 }
 
-Animations *Player::getAnimations() const {
-  return this->_animations;
+const Animations &Player::getAnimations() const {
+  return *this->_animations;
+}
+
+Animations &Player::getAnimations() {
+  return *this->_animations;
 }
 
 const Animation &Player::getAnimation(std::string name) const {
   return this->_animations->getAnimation(name);
 }
 
-std::vector<int> *Player::getLocation() const {
-  return this->_location;
-}
 
 void Player::updateFrameIndex() {
   std::string tmp = "walk down";

@@ -13,7 +13,6 @@ public:
   Vec2 position() const;
   Vec2 scale() const;
   float rotation() const;
-
   void move(Vec2 &src);
   
 
