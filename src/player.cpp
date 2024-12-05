@@ -4,23 +4,24 @@
 #include "SDL3/SDL_surface.h"
 #include <SDL3_image/SDL_image.h>
 #include <memory>
+#include <glm/glm.hpp>
 
 Player::Player() {
   SDL_Log("Player constructor called");
   this->_animations = std::make_unique<Animations>();
-  this->_transform = std::make_unique<Transform>();
+  // this->_transform = std::make_unique<Transform>();
 }
 
 Player::Player(const Player &src) {
   this->_animations = std::make_unique<Animations>(*src._animations);
-  this->_transform = std::make_unique<Transform>(*src._transform);
+  // this->_transform = std::make_unique<Transform>(*src._transform);
   this->_speed = src._speed;
 }
 
 Player &Player::operator=(const Player &src) {
   if (this != &src) {
     this->_animations = std::make_unique<Animations>(*src._animations);
-    this->_transform = std::make_unique<Transform>(*src._transform);
+  //   this->_transform = std::make_unique<Transform>(*src._transform);
     this->_speed = src._speed;
   }
 

@@ -6,12 +6,10 @@
 #include <SDL3_image/SDL_image.h>
 #include <string>
 #include <iostream>
+#include <cstdlib>
 
 // those includes are found on compilation through cmake. avoiding relative path solutions such as: ../include/<x>. Works with LSP through .clangd flags
 #include "AppState.hpp"
-#include "Transform.hpp"
-#include "Vector2.hpp"
-
 
 SDL_FRect drect;
 
@@ -20,19 +18,6 @@ void draw_background(SDL_Renderer *renderer, int w, int h, long int x);
 // called once before everything else
 // can set a pointer to appstate if want to pass to functions
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char **argv) {
-  // tests
-  Vec2 tmp = Vec2(12.0f, 4.0f);
-  std::cout << tmp << std::endl;
-  Vec2 comparison = Vec2(0.0f, 23.0f);
-  float angle = tmp.angleWith(comparison);
-  Vec2 normal = tmp.normalize();
-  std::cout << "angle: " << angle << ", normal vector: " << normal << std::endl;
-
-
-
-
-
-
   // init start  
   AppState *state = new AppState();
   if (!state) {
@@ -100,8 +85,16 @@ void SDL_AppQuit(void *appstate, SDL_AppResult result) {
 
   delete state->getPlayer();
 
+  
   SDL_Log("SDL3 shutdown\n");
   SDL_DestroyRenderer(state->getRenderer());
   SDL_DestroyWindow(state->getWindow());
   SDL_Log("result: %d\n", result);
+
+
+
+  // leak checks
+  // 16byte leak is EXPECTED, leak from macos/sdl interraction
+  fscanf(stdin, "c");
+  system("leaks -- hello_world");
 }
