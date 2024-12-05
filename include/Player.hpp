@@ -1,6 +1,8 @@
 #include <SDL3/SDL.h>
 #include "Animations.hpp"
+#include "Transform.hpp"
 #include <memory>
+#include <glm/glm.hpp>
 
 class Player {
 public:
@@ -20,7 +22,7 @@ public:
 
 private:
   std::unique_ptr<Animations> _animations;
-  // std::unique_ptr<Transform> _transform;
+  std::unique_ptr<Transform> _transform;
   int _speed;
     // Animations *_animations;
 };

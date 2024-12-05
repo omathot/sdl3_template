@@ -94,7 +94,7 @@ void SDL_AppQuit(void *appstate, SDL_AppResult result) {
 
 
   // leak checks
-  // 16byte leak is EXPECTED, leak from macos/sdl interraction
+  // 16byte leak is EXPECTED, leak from macos/sdl interraction (NSSet, i think that's from METAL's NextStep library)
   fscanf(stdin, "c");
   system("leaks -- hello_world");
 }

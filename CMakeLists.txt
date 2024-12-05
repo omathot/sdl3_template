@@ -6,6 +6,7 @@ set(SOURCE_FILES
     src/animation.cpp
     src/player.cpp
     src/appState.cpp
+    src/transform.cpp
 )
 
 # PROJECT
