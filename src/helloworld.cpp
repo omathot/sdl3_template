@@ -4,15 +4,19 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include <SDL3_image/SDL_image.h>
+#include <SDL3_ttf/SDL_ttf.h>
+#include <glm/glm.hpp>
+#include <imgui/imgui.h>
+#include <imgui_impl_sdl3.h>
+#include <imgui_impl_sdlrenderer3.h>
+
 #include <string>
-#include <iostream>
 #include <cstdlib>
 
 // those includes are found on compilation through cmake. avoiding relative path solutions such as: ../include/<x>. Works with LSP through .clangd flags
 #include "AppState.hpp"
 
 SDL_FRect drect;
-
 void draw_background(SDL_Renderer *renderer, int w, int h, long int x);
 
 // called once before everything else
@@ -38,6 +42,19 @@ SDL_AppResult SDL_AppIterate(void *appstate) {
     SDL_Log("Failed to retrieve appstat\n");
     return SDL_APP_FAILURE;
   }
+  ImGui_ImplSDL3_NewFrame();
+  ImGui_ImplSDLRenderer3_NewFrame();
+  ImGui::NewFrame();
+
+  ImGui::Begin("Test Window");
+  static float f = 0.0f;
+  ImGui::Text("Hello from ImGui!");
+  if (ImGui::Button("Click Me!")) {
+    f += 0.1f;
+  }
+  ImGui::Text("Button clicked value: %.1f", f);
+  ImGui::End();
+  
   state->updateCount();
   Player *player = state->getPlayer();
   if (!player) {
@@ -54,6 +71,12 @@ SDL_AppResult SDL_AppIterate(void *appstate) {
   drect.w = 32;
   drect.x = state->getCount();
   SDL_RenderTexture(state->getRenderer(), player->getCurrentFrame(), NULL, &drect);
+
+  ImGui::Render();
+  ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), state->getRenderer());
+
+
+  
   SDL_RenderPresent(state->getRenderer());
 
   SDL_Delay(state->getPlayer()->getAnimation("walk down").getDelay());
@@ -64,6 +87,8 @@ SDL_AppResult SDL_AppIterate(void *appstate) {
 // called everytime an SDL_event is received, event handling goes here.
 SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event) {
   AppState *state = (AppState *)appstate;
+  ImGui_ImplSDL3_ProcessEvent(event);
+
   switch (event->type) {
     case SDL_EVENT_QUIT:
       SDL_Log("SDL3 event quit\n");
@@ -83,6 +108,10 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event) {
 void SDL_AppQuit(void *appstate, SDL_AppResult result) {
   AppState *state = (AppState *)appstate;
 
+  ImGui_ImplSDLRenderer3_Shutdown();
+  ImGui_ImplSDL3_Shutdown();
+  ImGui::DestroyContext();
+
   delete state->getPlayer();
 
   
@@ -90,7 +119,6 @@ void SDL_AppQuit(void *appstate, SDL_AppResult result) {
   SDL_DestroyRenderer(state->getRenderer());
   SDL_DestroyWindow(state->getWindow());
   SDL_Log("result: %d\n", result);
-
 
 
   // leak checks

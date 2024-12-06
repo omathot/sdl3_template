@@ -23,6 +23,7 @@ public:
   
 private:
   long int _count;
+  bool _imgui_init;
 
   SDL_Window *_window;
   SDL_Renderer *_renderer;
